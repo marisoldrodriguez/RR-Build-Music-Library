@@ -1,7 +1,10 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Gallery from './Components/Gallery';
 import SearchBar from './Components/SearchBar';
+import AlbumView from './Components/AlbumView';
+import ArtistView from './Components/ArtistView';
 
 
 function App() {
@@ -34,11 +37,20 @@ function App() {
   }
 
   return (
-    <div className="App">      
-      <SearchBar handleSearch={handleSearch} />
-      {message}
-      <Gallery data={data} />
-      
+    <div>  
+    {message}
+      <Router>
+        <Routes>
+          <Route path='/' element={
+            <Fragment>
+              <SearchBar handleSearch={handleSearch} />              
+              <Gallery data={data} />
+            </Fragment>
+          } />
+          <Route path='/album/:id' element={<AlbumView />} />
+          <Route path='/artist/:id' element={<ArtistView />} />              
+        </Routes>  
+      </Router>
     </div>
   );
 }
